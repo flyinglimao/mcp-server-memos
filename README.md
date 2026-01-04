@@ -14,16 +14,18 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server for [M
 
 ## Installation
 
+This project uses [pnpm](https://pnpm.io/) as the package manager.
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/memos-mcp-server.git
 cd memos-mcp-server
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project
-npm run build
+pnpm run build
 ```
 
 ## Configuration
@@ -181,16 +183,16 @@ The server supports CEL filter expressions for advanced queries.
 
 ```bash
 # Run in development mode
-npm run dev
+pnpm run dev
 
 # Run tests
-npm test
+pnpm test
 
 # Lint code
-npm run lint
+pnpm run lint
 
 # Format code
-npm run format
+pnpm run format
 ```
 
 ## License
