@@ -10,6 +10,6 @@ import { registerUserManagementTools } from './users.js';
 
 export function registerTier3Tools(server: McpServer): void {
   registerUserManagementTools(server);
-  // registerInstanceSettingTools(server);
-  // registerActivityTools(server);
+  // TODO: registerInstanceSettingTools(server);
+  // TODO: registerActivityTools(server);
 }
