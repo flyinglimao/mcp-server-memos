@@ -1,4 +1,4 @@
-import { MemosClient } from '../client.js';
+import type { MemosClient } from '../client.js';
 import type { User, ListUsersResponse, CreateUserRequest } from '../../types/index.js';
 
 export interface ListUsersOptions {

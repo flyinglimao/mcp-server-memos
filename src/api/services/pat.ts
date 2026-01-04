@@ -1,6 +1,5 @@
-import { MemosClient } from '../client.js';
+import type { MemosClient } from '../client.js';
 import type {
-  PersonalAccessToken,
   ListPersonalAccessTokensResponse,
   CreatePersonalAccessTokenResponse,
   CreatePersonalAccessTokenRequest

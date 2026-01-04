@@ -1,4 +1,4 @@
-import { MemosClient } from '../client.js';
+import type { MemosClient } from '../client.js';
 import type {
   Webhook,
   ListWebhooksResponse,

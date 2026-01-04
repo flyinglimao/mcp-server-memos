@@ -1,4 +1,4 @@
-import { MemosClient } from '../client.js';
+import type { MemosClient } from '../client.js';
 import type { Activity, ListActivitiesResponse } from '../../types/index.js';
 
 export interface ListActivitiesOptions {
