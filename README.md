@@ -14,16 +14,18 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server for [M
 
 ## Installation
 
+This project uses [pnpm](https://pnpm.io/) as the package manager.
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/memos-mcp-server.git
 cd memos-mcp-server
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project
-npm run build
+pnpm run build
 ```
 
 ## Configuration
@@ -137,6 +139,7 @@ Example configurations:
 | `delete_webhook` | Delete a webhook |
 | `get_user_setting` | Get user settings |
 | `update_user_setting` | Update user settings |
+| `list_user_settings` | List all user settings |
 | `list_notifications` | List user notifications |
 | `update_notification` | Update a notification |
 | `delete_notification` | Delete a notification |
@@ -146,6 +149,7 @@ Example configurations:
 | Tool | Description |
 |------|-------------|
 | `list_users` | List all users |
+| `get_user` | Get a specific user by ID or username |
 | `create_user` | Create a new user |
 | `update_user` | Update a user |
 | `delete_user` | Delete a user |
@@ -179,16 +183,16 @@ The server supports CEL filter expressions for advanced queries.
 
 ```bash
 # Run in development mode
-npm run dev
+pnpm run dev
 
 # Run tests
-npm test
+pnpm test
 
 # Lint code
-npm run lint
+pnpm run lint
 
 # Format code
-npm run format
+pnpm run format
 ```
 
 ## License

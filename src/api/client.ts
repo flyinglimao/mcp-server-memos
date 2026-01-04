@@ -60,13 +60,36 @@ export class MemosClient {
     }
 
     const response = await fetch(url.toString(), fetchOptions);
-    const data = await response.json();
+
+    // Handle responses without body (e.g., 204 No Content)
+    const contentType = response.headers.get('content-type');
+    const hasJsonContent = contentType?.includes('application/json');
+
+    let data: unknown;
+    if (hasJsonContent || response.status !== 204) {
+      try {
+        data = await response.json();
+      } catch {
+        // If JSON parsing fails and response is not OK, throw error with status
+        if (!response.ok) {
+          throw new MemosApiError(
+            response.status,
+            `HTTP ${response.status}: ${response.statusText}`,
+            []
+          );
+        }
+        // For successful responses with no JSON, return empty object
+        data = {};
+      }
+    } else {
+      data = {};
+    }
 
     if (!response.ok) {
       const error = data as ApiError;
       throw new MemosApiError(
         error.code ?? response.status,
-        error.message ?? 'Unknown error',
+        error.message ?? `HTTP ${response.status}: ${response.statusText}`,
         error.details ?? []
       );
     }
