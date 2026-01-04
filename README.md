@@ -137,6 +137,7 @@ Example configurations:
 | `delete_webhook` | Delete a webhook |
 | `get_user_setting` | Get user settings |
 | `update_user_setting` | Update user settings |
+| `list_user_settings` | List all user settings |
 | `list_notifications` | List user notifications |
 | `update_notification` | Update a notification |
 | `delete_notification` | Delete a notification |
@@ -146,6 +147,7 @@ Example configurations:
 | Tool | Description |
 |------|-------------|
 | `list_users` | List all users |
+| `get_user` | Get a specific user by ID or username |
 | `create_user` | Create a new user |
 | `update_user` | Update a user |
 | `delete_user` | Delete a user |
