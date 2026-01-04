@@ -1,22 +1,14 @@
-/**
- * Attachment tools
- */
-
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { getInstance } from '../../config/index.js';
 import { createClient, MemosApiError } from '../../api/index.js';
-import type {
-  Attachment,
-  ListAttachmentsResponse,
-  CreateAttachmentRequest,
-} from '../../types/index.js';
+import * as instanceService from '../../api/services/instance.js';
 
-export function registerAttachmentTools(server: McpServer): void {
-  // List attachments
+export function registerInstanceTools(server: McpServer): void {
+  // get_instance_profile - Get instance info
   server.tool(
-    'list_attachments',
-    'List all attachments.',
+    'get_instance_profile',
+    'Get instance profile information (version, owner, mode).',
     {
       instance: z.string().describe('Instance name'),
     },
@@ -31,23 +23,17 @@ export function registerAttachmentTools(server: McpServer): void {
 
       try {
         const client = createClient(inst);
-        const response = await client.get<ListAttachmentsResponse>('/attachments');
-
-        if (!response.attachments?.length) {
-          return {
-            content: [{ type: 'text' as const, text: 'No attachments found.' }],
-          };
-        }
-
-        const list = response.attachments
-          .map(
-            (a) =>
-              `- **${a.filename}** (${a.type}, ${a.size} bytes)\n  ${a.name}${a.memo ? ` → ${a.memo}` : ''}`
-          )
-          .join('\n');
+        const profile = await instanceService.getInstanceProfile(client);
 
         return {
-          content: [{ type: 'text' as const, text: `Attachments:\n${list}` }],
+          content: [{
+            type: 'text' as const,
+            text: `# Instance Profile\n\n` +
+                  `- **Version:** ${profile.version}\n` +
+                  `- **Mode:** ${profile.mode}\n` +
+                  `- **Owner:** ${profile.owner}\n` +
+                  `- **URL:** ${profile.instanceUrl}`,
+          }],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
@@ -61,18 +47,15 @@ export function registerAttachmentTools(server: McpServer): void {
     }
   );
 
-  // Upload attachment
+  // get_instance_setting - Get specific setting
   server.tool(
-    'upload_attachment',
-    'Upload a new attachment.',
+    'get_instance_setting',
+    'Get a specific instance setting.',
     {
       instance: z.string().describe('Instance name'),
-      filename: z.string().describe('Filename'),
-      type: z.string().describe('MIME type (e.g., "image/png")'),
-      content: z.string().describe('Base64-encoded file content'),
-      memo: z.string().optional().describe('Associate with memo (e.g., "memos/123")'),
+      settingName: z.string().describe('Setting name'),
     },
-    async ({ instance, filename, type, content, memo }) => {
+    async ({ instance, settingName }) => {
       const inst = await getInstance(instance);
       if (!inst) {
         return {
@@ -83,16 +66,13 @@ export function registerAttachmentTools(server: McpServer): void {
 
       try {
         const client = createClient(inst);
-        const request: CreateAttachmentRequest = { filename, type, content, memo };
-        const attachment = await client.post<Attachment>('/attachments', request);
+        const setting = await instanceService.getInstanceSetting(client, settingName);
 
         return {
-          content: [
-            {
-              type: 'text' as const,
-              text: `Successfully uploaded attachment: ${attachment.name}`,
-            },
-          ],
+          content: [{
+            type: 'text' as const,
+            text: JSON.stringify(setting, null, 2),
+          }],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
@@ -106,16 +86,17 @@ export function registerAttachmentTools(server: McpServer): void {
     }
   );
 
-  // Delete attachment
+  // update_instance_setting - Update setting (admin only)
   server.tool(
-    'delete_attachment',
-    'Delete an attachment.',
+    'update_instance_setting',
+    'Update an instance setting (admin only).',
     {
       instance: z.string().describe('Instance name'),
-      attachmentName: z.string().describe('Attachment name'),
+      settingName: z.string().describe('Setting name'),
+      value: z.string().describe('New value (JSON string)'),
     },
-    async ({ instance, attachmentName }) => {
-      const inst = await getInstance(instance);
+    async ({ instance, settingName, value }) => {
+       const inst = await getInstance(instance);
       if (!inst) {
         return {
           content: [{ type: 'text' as const, text: `Instance "${instance}" not found.` }],
@@ -125,15 +106,23 @@ export function registerAttachmentTools(server: McpServer): void {
 
       try {
         const client = createClient(inst);
-        await client.delete(`/${attachmentName}`);
+        let parsedValue;
+        try {
+            parsedValue = JSON.parse(value);
+        } catch (e) {
+             return {
+                content: [{ type: 'text' as const, text: `Invalid JSON value: ${e}` }],
+                isError: true,
+            };
+        }
+
+        const result = await instanceService.updateInstanceSetting(client, settingName, parsedValue);
 
         return {
-          content: [
-            {
-              type: 'text' as const,
-              text: `Successfully deleted attachment: ${attachmentName}`,
-            },
-          ],
+          content: [{
+            type: 'text' as const,
+            text: JSON.stringify(result, null, 2),
+          }],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {

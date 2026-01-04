@@ -15,9 +15,9 @@ import { registerShortcutTools } from './shortcuts.js';
 import { registerAttachmentTools } from './attachments.js';
 
 export function registerTier1Tools(server: McpServer): void {
-    registerInstanceTools(server);
-    registerMemoTools(server);
-    registerTagTools(server);
-    registerShortcutTools(server);
-    registerAttachmentTools(server);
+  registerInstanceTools(server);
+  registerMemoTools(server);
+  registerTagTools(server);
+  registerShortcutTools(server);
+  registerAttachmentTools(server);
 }

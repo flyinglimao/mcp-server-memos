@@ -1,4 +1,4 @@
-import { MemosClient } from '../client.js';
+import type { MemosClient } from '../client.js';
 import type { UserSetting, ListUserSettingsResponse } from '../../types/index.js';
 
 export async function getUserSetting(
