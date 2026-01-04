@@ -1,5 +1,5 @@
 {
-  "name": "memos-mcp-server",
+  "name": "@anthropic/memos-mcp-server",
   "version": "0.1.0",
   "description": "MCP server for Memos - a privacy-focused note-taking application",
   "type": "module",
@@ -7,24 +7,46 @@
   "bin": {
     "memos-mcp": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
     "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build",
     "test": "echo \"No tests yet\" && exit 0"
   },
   "keywords": [
     "mcp",
     "memos",
     "ai",
-    "notes"
+    "notes",
+    "model-context-protocol",
+    "claude"
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flyinglimao/mcp-server-memos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/flyinglimao/mcp-server-memos/issues"
+  },
+  "homepage": "https://github.com/flyinglimao/mcp-server-memos#readme",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.1",
