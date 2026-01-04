@@ -6,10 +6,10 @@
  */
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { registerUserManagementTools } from './users.js';
 
 export function registerTier3Tools(server: McpServer): void {
-    // TODO: Implement Tier 3 tools
-    // registerUserManagementTools(server);
-    // registerInstanceSettingTools(server);
-    // registerActivityTools(server);
+  registerUserManagementTools(server);
+  // registerInstanceSettingTools(server);
+  // registerActivityTools(server);
 }
