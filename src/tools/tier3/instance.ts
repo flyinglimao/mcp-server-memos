@@ -26,14 +26,17 @@ export function registerInstanceTools(server: McpServer): void {
         const profile = await instanceService.getInstanceProfile(client);
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: `# Instance Profile\n\n` +
-                  `- **Version:** ${profile.version}\n` +
-                  `- **Mode:** ${profile.mode}\n` +
-                  `- **Owner:** ${profile.owner}\n` +
-                  `- **URL:** ${profile.instanceUrl}`,
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text:
+                `# Instance Profile\n\n` +
+                `- **Version:** ${profile.version}\n` +
+                `- **Mode:** ${profile.mode}\n` +
+                `- **Owner:** ${profile.owner}\n` +
+                `- **URL:** ${profile.instanceUrl}`,
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
@@ -69,10 +72,12 @@ export function registerInstanceTools(server: McpServer): void {
         const setting = await instanceService.getInstanceSetting(client, settingName);
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: JSON.stringify(setting, null, 2),
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: JSON.stringify(setting, null, 2),
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
@@ -96,7 +101,7 @@ export function registerInstanceTools(server: McpServer): void {
       value: z.string().describe('New value (JSON string)'),
     },
     async ({ instance, settingName, value }) => {
-       const inst = await getInstance(instance);
+      const inst = await getInstance(instance);
       if (!inst) {
         return {
           content: [{ type: 'text' as const, text: `Instance "${instance}" not found.` }],
@@ -108,21 +113,27 @@ export function registerInstanceTools(server: McpServer): void {
         const client = createClient(inst);
         let parsedValue;
         try {
-            parsedValue = JSON.parse(value);
+          parsedValue = JSON.parse(value);
         } catch (e) {
-             return {
-                content: [{ type: 'text' as const, text: `Invalid JSON value: ${e}` }],
-                isError: true,
-            };
+          return {
+            content: [{ type: 'text' as const, text: `Invalid JSON value: ${e}` }],
+            isError: true,
+          };
         }
 
-        const result = await instanceService.updateInstanceSetting(client, settingName, parsedValue);
+        const result = await instanceService.updateInstanceSetting(
+          client,
+          settingName,
+          parsedValue
+        );
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: JSON.stringify(result, null, 2),
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: JSON.stringify(result, null, 2),
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {

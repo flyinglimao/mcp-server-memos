@@ -33,7 +33,7 @@ export function registerActivityTools(server: McpServer): void {
         }
 
         const list = response.activities
-          .map(a => `- **${a.type}** by ${a.creator} at ${a.createTime}\n  ${a.name}`)
+          .map((a) => `- **${a.type}** by ${a.creator} at ${a.createTime}\n  ${a.name}`)
           .join('\n');
 
         return {
@@ -73,13 +73,15 @@ export function registerActivityTools(server: McpServer): void {
         const activity = await activityService.getActivity(client, activityName);
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: JSON.stringify(activity, null, 2),
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: JSON.stringify(activity, null, 2),
+            },
+          ],
         };
       } catch (error) {
-         if (error instanceof MemosApiError) {
+        if (error instanceof MemosApiError) {
           return {
             content: [{ type: 'text' as const, text: `Error: ${error.message}` }],
             isError: true,

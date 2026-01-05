@@ -1,10 +1,7 @@
 import type { MemosClient } from '../client.js';
 import type { UserSetting, ListUserSettingsResponse } from '../../types/index.js';
 
-export async function getUserSetting(
-  client: MemosClient,
-  name: string
-): Promise<UserSetting> {
+export async function getUserSetting(client: MemosClient, name: string): Promise<UserSetting> {
   return client.get(`/${name}`);
 }
 

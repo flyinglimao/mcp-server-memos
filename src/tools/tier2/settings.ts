@@ -1,7 +1,13 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { getInstance } from '../../config/index.js';
-import { createClient, MemosApiError, getUserSetting, updateUserSetting, listUserSettings } from '../../api/index.js';
+import {
+  createClient,
+  MemosApiError,
+  getUserSetting,
+  updateUserSetting,
+  listUserSettings,
+} from '../../api/index.js';
 import type { UserSetting } from '../../types/index.js';
 
 export function registerSettingTools(server: McpServer): void {
@@ -76,7 +82,7 @@ export function registerSettingTools(server: McpServer): void {
           };
         }
 
-        const mask = updateMask.split(',').map(s => s.trim());
+        const mask = updateMask.split(',').map((s) => s.trim());
         const response = await updateUserSetting(client, name, parsedData, mask);
 
         return {

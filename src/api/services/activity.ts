@@ -10,12 +10,12 @@ export async function listActivities(
   client: MemosClient,
   options?: ListActivitiesOptions
 ): Promise<ListActivitiesResponse> {
-  return client.get('/activities', options as Record<string, string | number | boolean | undefined>);
+  return client.get(
+    '/activities',
+    options as Record<string, string | number | boolean | undefined>
+  );
 }
 
-export async function getActivity(
-  client: MemosClient,
-  name: string
-): Promise<Activity> {
+export async function getActivity(client: MemosClient, name: string): Promise<Activity> {
   return client.get(`/${name}`);
 }

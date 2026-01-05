@@ -7,10 +7,14 @@ import type { UserRole, User } from '../../types/index.js';
 
 function getRoleBadge(role: string): string {
   switch (role) {
-    case 'HOST': return '👑';
-    case 'ADMIN': return '🔧';
-    case 'USER': return '👤';
-    default: return '';
+    case 'HOST':
+      return '👑';
+    case 'ADMIN':
+      return '🔧';
+    case 'USER':
+      return '👤';
+    default:
+      return '';
   }
 }
 
@@ -44,7 +48,7 @@ export function registerUserManagementTools(server: McpServer): void {
         }
 
         const userList = response.users
-          .map(user => {
+          .map((user) => {
             const badge = getRoleBadge(user.role);
             return `- ${badge} **${user.username}** (${user.name})\n  Role: ${user.role} | State: ${user.state}${user.email ? ` | Email: ${user.email}` : ''}`;
           })
@@ -57,7 +61,9 @@ export function registerUserManagementTools(server: McpServer): void {
         if (error instanceof MemosApiError) {
           if (error.code === 7) {
             return {
-              content: [{ type: 'text' as const, text: 'Permission denied. Admin privileges required.' }],
+              content: [
+                { type: 'text' as const, text: 'Permission denied. Admin privileges required.' },
+              ],
               isError: true,
             };
           }
@@ -112,7 +118,9 @@ export function registerUserManagementTools(server: McpServer): void {
         if (error instanceof MemosApiError) {
           if (error.code === 7) {
             return {
-              content: [{ type: 'text' as const, text: 'Permission denied. Admin privileges required.' }],
+              content: [
+                { type: 'text' as const, text: 'Permission denied. Admin privileges required.' },
+              ],
               isError: true,
             };
           }
@@ -158,16 +166,20 @@ export function registerUserManagementTools(server: McpServer): void {
         });
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: `Successfully created user: ${user.username} (${user.name})`,
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: `Successfully created user: ${user.username} (${user.name})`,
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
           if (error.code === 7) {
             return {
-              content: [{ type: 'text' as const, text: 'Permission denied. Admin privileges required.' }],
+              content: [
+                { type: 'text' as const, text: 'Permission denied. Admin privileges required.' },
+              ],
               isError: true,
             };
           }
@@ -205,10 +217,22 @@ export function registerUserManagementTools(server: McpServer): void {
       const updateFields: string[] = [];
       const data: Partial<User> & { password?: string } = {};
 
-      if (email !== undefined) { data.email = email; updateFields.push('email'); }
-      if (displayName !== undefined) { data.displayName = displayName; updateFields.push('display_name'); }
-      if (role !== undefined) { data.role = role as UserRole; updateFields.push('role'); }
-      if (password !== undefined) { data.password = password; updateFields.push('password'); }
+      if (email !== undefined) {
+        data.email = email;
+        updateFields.push('email');
+      }
+      if (displayName !== undefined) {
+        data.displayName = displayName;
+        updateFields.push('display_name');
+      }
+      if (role !== undefined) {
+        data.role = role as UserRole;
+        updateFields.push('role');
+      }
+      if (password !== undefined) {
+        data.password = password;
+        updateFields.push('password');
+      }
 
       if (updateFields.length === 0) {
         return {
@@ -222,16 +246,20 @@ export function registerUserManagementTools(server: McpServer): void {
         const user = await userService.updateUser(client, userName, data, updateFields);
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: `Successfully updated user: ${user.username} (${user.name})`,
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: `Successfully updated user: ${user.username} (${user.name})`,
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
           if (error.code === 7) {
             return {
-              content: [{ type: 'text' as const, text: 'Permission denied. Admin privileges required.' }],
+              content: [
+                { type: 'text' as const, text: 'Permission denied. Admin privileges required.' },
+              ],
               isError: true,
             };
           }
@@ -267,16 +295,20 @@ export function registerUserManagementTools(server: McpServer): void {
         await userService.deleteUser(client, userName);
 
         return {
-          content: [{
-            type: 'text' as const,
-            text: `Successfully deleted user: ${userName}`,
-          }],
+          content: [
+            {
+              type: 'text' as const,
+              text: `Successfully deleted user: ${userName}`,
+            },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
           if (error.code === 7) {
             return {
-              content: [{ type: 'text' as const, text: 'Permission denied. Admin privileges required.' }],
+              content: [
+                { type: 'text' as const, text: 'Permission denied. Admin privileges required.' },
+              ],
               isError: true,
             };
           }

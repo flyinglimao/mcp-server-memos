@@ -2,7 +2,7 @@ import type { MemosClient } from '../client.js';
 import type {
   ListPersonalAccessTokensResponse,
   CreatePersonalAccessTokenResponse,
-  CreatePersonalAccessTokenRequest
+  CreatePersonalAccessTokenRequest,
 } from '../../types/index.js';
 
 export async function listPersonalAccessTokens(
@@ -20,9 +20,6 @@ export async function createPersonalAccessToken(
   return client.post(`/users/${user}/personalAccessTokens`, data);
 }
 
-export async function deletePersonalAccessToken(
-  client: MemosClient,
-  name: string
-): Promise<void> {
+export async function deletePersonalAccessToken(client: MemosClient, name: string): Promise<void> {
   await client.delete(`/${name}`);
 }

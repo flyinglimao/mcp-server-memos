@@ -17,9 +17,6 @@ export async function updateUserNotification(
   return client.patch(`/${name}`, data, { updateMask: updateMask.join(',') });
 }
 
-export async function deleteUserNotification(
-  client: MemosClient,
-  name: string
-): Promise<void> {
+export async function deleteUserNotification(client: MemosClient, name: string): Promise<void> {
   await client.delete(`/${name}`);
 }

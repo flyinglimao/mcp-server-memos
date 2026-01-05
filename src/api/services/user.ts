@@ -15,17 +15,11 @@ export async function listUsers(
   return client.get('/users', options as Record<string, string | number | boolean | undefined>);
 }
 
-export async function getUser(
-  client: MemosClient,
-  name: string
-): Promise<User> {
+export async function getUser(client: MemosClient, name: string): Promise<User> {
   return client.get(`/${name}`);
 }
 
-export async function createUser(
-  client: MemosClient,
-  data: CreateUserRequest
-): Promise<User> {
+export async function createUser(client: MemosClient, data: CreateUserRequest): Promise<User> {
   return client.post('/users', data);
 }
 
@@ -38,9 +32,6 @@ export async function updateUser(
   return client.patch(`/${name}`, data, { updateMask: updateMask.join(',') });
 }
 
-export async function deleteUser(
-  client: MemosClient,
-  name: string
-): Promise<void> {
+export async function deleteUser(client: MemosClient, name: string): Promise<void> {
   await client.delete(`/${name}`);
 }

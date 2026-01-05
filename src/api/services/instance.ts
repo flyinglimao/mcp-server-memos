@@ -1,16 +1,11 @@
 import type { MemosClient } from '../client.js';
 import type { InstanceProfile } from '../../types/index.js';
 
-export async function getInstanceProfile(
-  client: MemosClient
-): Promise<InstanceProfile> {
+export async function getInstanceProfile(client: MemosClient): Promise<InstanceProfile> {
   return client.get('/instance/profile');
 }
 
-export async function getInstanceSetting(
-  client: MemosClient,
-  name: string
-): Promise<unknown> {
+export async function getInstanceSetting(client: MemosClient, name: string): Promise<unknown> {
   return client.get(`/instance/settings/${name}`);
 }
 

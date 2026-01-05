@@ -3,7 +3,7 @@ import type {
   Webhook,
   ListWebhooksResponse,
   CreateWebhookRequest,
-  UpdateWebhookRequest
+  UpdateWebhookRequest,
 } from '../../types/index.js';
 
 export async function listUserWebhooks(
@@ -30,9 +30,6 @@ export async function updateUserWebhook(
   return client.patch(`/${name}`, data, { updateMask: updateMask.join(',') });
 }
 
-export async function deleteUserWebhook(
-  client: MemosClient,
-  name: string
-): Promise<void> {
+export async function deleteUserWebhook(client: MemosClient, name: string): Promise<void> {
   await client.delete(`/${name}`);
 }

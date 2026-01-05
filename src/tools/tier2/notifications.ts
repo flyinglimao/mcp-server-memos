@@ -1,7 +1,13 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { getInstance } from '../../config/index.js';
-import { createClient, MemosApiError, listUserNotifications, updateUserNotification, deleteUserNotification } from '../../api/index.js';
+import {
+  createClient,
+  MemosApiError,
+  listUserNotifications,
+  updateUserNotification,
+  deleteUserNotification,
+} from '../../api/index.js';
 import type { UserNotification } from '../../types/index.js';
 
 export function registerNotificationTools(server: McpServer): void {
@@ -72,7 +78,7 @@ export function registerNotificationTools(server: McpServer): void {
           };
         }
 
-        const mask = updateMask.split(',').map(s => s.trim());
+        const mask = updateMask.split(',').map((s) => s.trim());
         const response = await updateUserNotification(client, notification, parsedData, mask);
 
         return {
@@ -112,7 +118,9 @@ export function registerNotificationTools(server: McpServer): void {
         await deleteUserNotification(client, notification);
 
         return {
-          content: [{ type: 'text' as const, text: `Successfully deleted notification: ${notification}` }],
+          content: [
+            { type: 'text' as const, text: `Successfully deleted notification: ${notification}` },
+          ],
         };
       } catch (error) {
         if (error instanceof MemosApiError) {
