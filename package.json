@@ -22,7 +22,8 @@
     "format:check": "prettier --check src/",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm run build",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "echo \"No tests yet\" && exit 0",
+    "test:tools": "npx tsx tests/test-tools.ts"
   },
   "keywords": [
     "mcp",
