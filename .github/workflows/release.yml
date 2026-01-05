@@ -7,12 +7,13 @@ on:
         description: "Version to publish (leave empty to use package.json version)"
         required: false
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
 
     steps:
       - uses: actions/checkout@v4
