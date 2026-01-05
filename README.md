@@ -12,45 +12,6 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server for [M
 - 🔒 **Secure Storage**: API keys are stored locally in your configuration directory
 - 🎚️ **Tiered Tool Exposure**: Control which tools are enabled to minimize context usage
 
-## Installation
-
-This project uses [pnpm](https://pnpm.io/) as the package manager.
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/memos-mcp-server.git
-cd memos-mcp-server
-
-# Install dependencies
-pnpm install
-
-# Build the project
-pnpm run build
-```
-
-## Configuration
-
-### Adding Your First Instance
-
-When you first start using the MCP server, you'll need to add a Memos instance:
-
-1. Get your API key from your Memos instance:
-   - Go to Settings → My Account → Access Tokens
-   - Create a new access token
-   
-2. Connect the instance using the `connect_instance` tool:
-   ```
-   Host: https://your-memos-instance.com
-   Name: my-memos (optional friendly name)
-   API Key: your-access-token
-   ```
-
-### Configuration File Location
-
-Instance configurations are stored at:
-- **macOS/Linux**: `~/.config/memos-mcp/instances.json`
-- **Windows**: `%APPDATA%\memos-mcp\instances.json`
-
 ## Usage
 
 ### With Claude Desktop
@@ -61,8 +22,8 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
 {
   "mcpServers": {
     "memos": {
-      "command": "node",
-      "args": ["/path/to/memos-mcp-server/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "@0xlimao/memos-mcp-server"]
     }
   }
 }
@@ -84,24 +45,34 @@ Example configurations:
 ```json
 // Default: Only note-taking tools
 {
-  "args": ["/path/to/dist/index.js"]
+  "command": "npx",
+  "args": ["-y", "@0xlimao/memos-mcp-server"]
 }
 
 // With user advanced tools
 {
-  "args": ["/path/to/dist/index.js", "--user-tools"]
+  "command": "npx",
+  "args": ["-y", "@0xlimao/memos-mcp-server", "--user-tools"]
 }
 
 // With admin tools
 {
-  "args": ["/path/to/dist/index.js", "--admin-tools"]
+  "command": "npx",
+  "args": ["-y", "@0xlimao/memos-mcp-server", "--admin-tools"]
 }
 
 // All tools
 {
-  "args": ["/path/to/dist/index.js", "--full-tools"]
+  "command": "npx",
+  "args": ["-y", "@0xlimao/memos-mcp-server", "--full-tools"]
 }
 ```
+
+### Configuration File Location
+
+Instance configurations are stored at:
+- **macOS/Linux**: `~/.config/memos-mcp/instances.json`
+- **Windows**: `%APPDATA%\memos-mcp\instances.json`
 
 ## Available Tools
 
@@ -161,6 +132,15 @@ Example configurations:
 
 ## Examples
 
+### Connecting to a Memos Instance
+
+> "Connect to my Memos instance at https://memos.example.com with the API key abc123"
+
+The AI will use the `connect_instance` tool to save the connection:
+- **Host**: `https://memos.example.com`
+- **Name**: A friendly name (e.g., `personal`, `work`)
+- **API Key**: Your access token from Memos → Settings → My Account → Access Tokens
+
 ### Searching Across All Instances
 
 > "Find all memos containing 'project ideas' in all my memos instances"
@@ -182,6 +162,13 @@ The server supports CEL filter expressions for advanced queries.
 ## Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/flyinglimao/mcp-server-memos.git
+cd mcp-server-memos
+
+# Install dependencies
+pnpm install
+
 # Run in development mode
 pnpm run dev
 
