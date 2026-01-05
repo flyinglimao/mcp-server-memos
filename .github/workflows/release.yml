@@ -37,3 +37,5 @@ jobs:
 
       - name: Publish to NPM
         run: pnpm publish --no-git-checks
+        env:
+          NPM_CONFIG_PROVENANCE: true
